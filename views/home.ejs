@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href='/style.css'>
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+</head>
+<body> 
+     <%- include('partials/nav.ejs') %>
+   
+         <h1>this is home page</h1>
+         <form id='btn'>
+               <input type='text' name='item' autocomplete="off"/>
+               <button class="waves-effect waves-light btn">Submit</button>
+        </form>
+         <ul>
+                   <% data.map((value,index)=>{ %>
+                         <li onclick="deleteItem(this)"><%= value.wish %></li>
+                   <% }) %> 
+          
+                
+          
+           </ul>
+
+
+           <script>
+                   document.getElementById('btn').addEventListener('submit',num)
+function num(e)
+{
+      e.preventDefault()
+     //  alert(1)
+      const url = "http://localhost:5000/sent";
+
+                 var data = new URLSearchParams();
+               //   console.log(e.target)
+                 for(const pair of new FormData(e.target)){
+                     // console.log(pair)
+                 data.append(pair[0],pair[1])
+                 }
+
+                 fetch(url,{
+                     method:"post",
+                     body:data,
+                 
+                 }).then(res=>res.json())
+                 .then(res2 => {
+                     console.log(res2)
+                     location.reload()
+                 }); 
+}
+
+
+
+function deleteItem(kuchbhi)
+{
+     fetch(`http://localhost:5000/remove/${kuchbhi.innerHTML} `,{
+            method:'delete',
+
+        }).then(res=>res.json())
+                 .then(res2 => {
+                     console.log(res2)
+                     location.reload()
+                 }); 
+}
+
+           </script>
+</body>
+</html>

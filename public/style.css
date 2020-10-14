@@ -1,0 +1,10 @@
+body{
+    background-color: skyblue;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+}
+
+li{
+    cursor: pointer;
+}
